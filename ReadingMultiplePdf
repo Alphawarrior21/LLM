@@ -1,0 +1,23 @@
+import pdfx
+import os
+from PyPDF2 import PdfReader
+pdf_dir='D:/SumitLearningSpace/'
+pdf_text_data=[]
+for filename in os.listdir(pdf_dir):
+    if(filename.endswith('.pdf')):
+        file_path=os.path.join(pdf_dir,filename)
+    try:
+        with open(file_path,'rb') as file:
+            pdf=PdfReader(file)
+            text=""
+            for page_num in range(len(pdf.pages)):
+                page=pdf.pages[page_num]
+                text+=page.extract_text()
+            pdf_text_data.append({'Filename':filename,'Text':text})
+    except Exception as ex:
+        print(f"Error processing {filename} exception : {ex}")
+
+print(pdf_text_data)
+# pdf=pdfx.PDFx("https://weakdh.org/imperfect-forward-secrecy.pdf")
+# text=pdf.get_text()
+# print(text)
